@@ -1,0 +1,92 @@
+.App {
+  text-align: left;
+  padding: 2px 50px;
+  font-size: 14px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.Containerflex{
+  display:flex;
+  width: 100%;
+}
+.MuiFormHelperText-root.Mui-error {
+  color: #f44336 !important;
+}
+
+ .MuiFormHelperText-root{
+ color:red!important;
+   }
+.bold{
+  font-weight: bold;
+}
+.bigger{
+  font-size: larger;
+}
+.center{
+  text-align: center;
+}
+.done{
+  color:green;
+}
+.notDone{
+  color:red;
+}
+form{
+  width: 100%;
+}
+button{
+  color:white;
+  padding: 3px;
+  border: none;
+  border-radius: 3px;
+  background-color:#1976D2 ;
+  font-size: 14px;
+  min-width: 100px;
+  height: 30px;
+  margin: 5px;
+  letter-spacing: 1px;
+
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  
+  min-height: 7vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: black;
+  padding: 11px 21px;
+}
+.dialog{
+  width: 400px;
+  left: 38% !important;
+} 
+.MuiDialogTitle-root {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 7px 24px;
+}
+.login{}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
