@@ -1,0 +1,205 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  color: $font;
+}
+
+.App {
+  text-align: left;
+  padding: 2px 50px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  background-color: AppBG;
+  box-shadow: inset 0px 0px 8px 0px hsla(210, 70%, 90%, 1);
+}
+
+.App-header {
+  min-height: 7vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: calc(10px + 2vmin);
+  color: $font;
+  padding: 11px 21px;
+  background-color: $BG;
+  //box-shadow: 0px 0px 17px 1px hsla(210, 79%, 46%, 0.68);
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.logo {
+  font-family: fantasy;
+  color: white;
+  width: 39px;
+  border: 1px solid;
+  padding: 8px 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.header {
+  background: $BG;
+}
+.dialog {
+  width: 400px;
+  left: 38% !important;
+}
+form {
+  width: 100%;
+}
+button {
+  color: $buttonFontColor;
+  padding: 3px;
+  border: none;
+  border-radius: 3px;
+  background-color: $buttonBG;
+  font-size: 14px;
+  min-width: 100px;
+  height: 30px;
+  margin: 5px;
+  letter-spacing: 1px;
+}
+.myList button {
+  max-width: 25%;
+}
+
+input {
+  width: 100%;
+  border: 1px solid $border;
+}
+select {
+  padding: 10px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+}
+.Containerflex{
+  display: flex;
+}
+
+.container.myList {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+.containerT {
+  display: flex;
+  justify-content: space-between;
+  width: 67%;
+
+  button {
+    font-size: 18px;
+    min-width: 25px;
+    height: initial;
+    background: transparent;
+    color: black;
+    padding: 6px;
+    margin: 1px 15px;
+    .fa {
+      position: relative;
+      top: 1px;
+      left: 0px;
+      height: 20px;
+    }
+  }
+}
+.fa {
+  pointer-events: none;
+  position: relative;
+  top: 1px;
+  left: -6px;
+  height: 8px;
+}
+
+.table-container {
+  background: #8c959e17;
+  border: 1px solid #d9d9dc;
+  outline: 0;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.flex-table {
+  display: flex;
+  text-align: left;
+  flex-flow: row wrap;
+  transition: 0.5s;
+  img {
+    width: 5vw;
+  }
+  .flex-row {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    &.first {
+      width: 30%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+}
+.row {
+  padding: 4vh 1vw 1vh 2vw;
+}
+
+.taskRow img {
+  width: 6vw;
+  outline: 0;
+}
+
+.taskRow {
+  display: flex;
+  text-align: left;
+  flex-flow: row wrap;
+  transition: 0.5s;
+
+  &:first-of-type .flex-row {
+    background: $BG;
+    color: white;
+    width: 14%;
+    &.first {
+      width: 25%;
+      padding-left: 12px;
+    }
+    span {
+      margin: 1px 0px 3px 15px;
+      letter-spacing: 1px;
+      font-size: 15px;
+    }
+  }
+  .container div.myList {
+    width: 45%;
+    margin: 0 -19px;
+  }
+  .flex-row {
+    width: 9%;
+    display: flex;
+    outline: 0;
+    justify-content: center;
+    flex-direction: column;
+    &.first {
+      width: 28%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+}
+
+div.myTask {
+  width: 32% !important;
+}

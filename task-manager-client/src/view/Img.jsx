@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components/macro";
 
 const Img = ({ owner, userProfile }) => {
   const del = (owner, userProfile) => {
@@ -22,10 +21,3 @@ const Img = ({ owner, userProfile }) => {
 };
 
 export default Img;
-
-const List = styled.ul`
-  min-height: 550px;
-  background-color: #fff;
-  margin-bottom: 10px;
-  width: 100%;
-`;

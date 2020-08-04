@@ -5,13 +5,18 @@ import { createGlobalStyle } from "styled-components";
 import {
   updateProfile,
   updateAvatar,
-  getProfile,
-  getAllTasks,
+  getProfile
 } from "../service/axios";
 import { isEmpty } from "lodash";
 
-const Profile = ({ }) => {
-  const { setUserProfile, userProfile, userToken, setAllTasks } = useStore();
+const Profile = () => {
+  const {
+    setUserProfile,
+    userProfile,
+    userToken,
+      editTask,
+    setEditTask,
+  } = useStore();
   const sampleFileRef = useRef(null);
   // const userProfile={
   //   "_id":"5ee8fb1d18c6c4234c880c27",
@@ -30,7 +35,8 @@ const Profile = ({ }) => {
     await updateAvatar(sampleFileRef.current, userToken);
     await setUpdating(false);
     await setUserProfile(await getProfile(userToken));
-    await setAllTasks(await getAllTasks());
+    // await setAllTasks(await getAllTasks());
+    setEditTask(!editTask);
   };
 
   return (
@@ -38,7 +44,7 @@ const Profile = ({ }) => {
       <ProfileImg>
         <Img
           src={
-            !isEmpty(userProfile)&&userProfile.avatar!==undefined
+            !isEmpty(userProfile) && userProfile.avatar !== undefined
               ? `data:image/png;base64,${userProfile.avatar.toString("base64")}`
               : ""
           }
@@ -68,10 +74,10 @@ const Profile = ({ }) => {
               onChange={
                 updating
                   ? (e) =>
-                    setUserProfile({
-                      ...userProfile,
-                      name: e.target.value,
-                    })
+                      setUserProfile({
+                        ...userProfile,
+                        name: e.target.value,
+                      })
                   : null
               }
             />{" "}
@@ -88,10 +94,10 @@ const Profile = ({ }) => {
               onChange={
                 updating
                   ? (e) =>
-                    setUserProfile({
-                      ...userProfile,
-                      age: e.target.value,
-                    })
+                      setUserProfile({
+                        ...userProfile,
+                        age: e.target.value,
+                      })
                   : null
               }
             />
@@ -108,10 +114,10 @@ const Profile = ({ }) => {
               onChange={
                 updating
                   ? (e) =>
-                    setUserProfile({
-                      ...userProfile,
-                      email: e.target.value,
-                    })
+                      setUserProfile({
+                        ...userProfile,
+                        email: e.target.value,
+                      })
                   : null
               }
             />
@@ -121,39 +127,39 @@ const Profile = ({ }) => {
           <div className="details"> Password: </div>
           <div className="details">
             <input
-            type="password"
-            className={updating ? "onUpdate" : "readable"}
-            defaultValue={password}
-            readOnly={!updating}
-            onChange={
-              updating
-                ? (e) =>
-                  setUserProfile({
-                    ...userProfile,
-                    password: e.target.value,
-                  })
-                : null
-            }
-          />
+              type="password"
+              className={updating ? "onUpdate" : "readable"}
+              defaultValue={password}
+              readOnly={!updating}
+              onChange={
+                updating
+                  ? (e) =>
+                      setUserProfile({
+                        ...userProfile,
+                        password: e.target.value,
+                      })
+                  : null
+              }
+            />
+          </div>
         </div>
-        </div>
-      <UpdatePanel>
-        <button
-          onClick={() => {
-            updateProfile(userProfile, userToken);
-            setUserProfile((prv) => ({
-              ...prv,
-            }));
-            setUpdating(false);
-          }}
-        >
-          save
+        <UpdatePanel>
+          <button
+            onClick={() => {
+              updateProfile(userProfile, userToken);
+              setUserProfile((prv) => ({
+                ...prv,
+              }));
+              setUpdating(false);
+            }}
+          >
+            save
           </button>
-        <button onClick={() => setUpdating(true)}> update </button>
-      </UpdatePanel>
+          <button onClick={() => setUpdating(true)}> update </button>
+        </UpdatePanel>
       </ProfileDetails>
-    <LocalStyles />
-    </Container >
+      <LocalStyles />
+    </Container>
   );
 };
 
@@ -163,20 +169,28 @@ const Container = styled.div`
   display: flex;
   background: #8c959e17;
   padding: 20px;
-  height: 200px;
   border: 1px solid #d9d9dc;
+  @media only screen and (max-width: 414px) {
+  
+  }
 `;
 const UpdatePanel = styled.div`
   display: flex;
   width: 100%;
   padding: 20px;
   flex-direction: row;
+  @media only screen and (max-width: 414px) {
+    position: relative;
+    right: 15%;
+    top: 20px;
+  }
 `;
 
 const Img = styled.img`
   border-radius: 3px;
-  width: 80%;
+  width: 98%;
   margin-bottom: 7px;
+  border: 1px solid #d9d9dc;
 `;
 
 const ProfileImg = styled.div`
@@ -185,14 +199,18 @@ const ProfileImg = styled.div`
 `;
 
 const ProfileDetails = styled.ul`
-  padding: 10px;
-  width: 60%;
+  padding: 0 10px;
+  width: 68%;
 `;
 
 const LocalStyles = createGlobalStyle`
 .details{
    width:60%;
-  margin:2px 0
+  margin:2px 0;
+  @media only screen and (max-width: 414px) {
+    margin:0px;
+    width:27%;
+  }
 }
 .readable{
  background:transparent;

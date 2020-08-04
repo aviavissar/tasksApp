@@ -26,6 +26,7 @@ const LogIn = () => {
     <div>
       {!isConnected ? (
         <Button
+        className={classes.MuiButton}
           variant="outlined"
           color="primary"
           onClick={() => {
@@ -36,10 +37,10 @@ const LogIn = () => {
         </Button>
       ) : (
         <div className={classes.logoutDiv}>
-          <Button variant="outlined" color="primary" onClick={doLogout}>
+          <Button variant="outlined"  className={classes.MuiButton} color="primary" onClick={doLogout}>
             log Out
           </Button>
-          <span>hi {userProfile.name}</span>
+          <span className={classes.logspan}>hi {userProfile.name}</span>
         </div>
       )}
 
@@ -99,12 +100,25 @@ export default LogIn;
 
 const useStyles = makeStyles({
   root: {
-    width: "400px",
-    left: "38% !important",
-  },
+    width: "320px",
+    
+   },
+   "MuiButton":{
+    "font-size":'0.8rem',
+    width: '60px',
+    padding: '1px',
+    margin: '5px'
+   },
   logoutDiv: {
-    width: "300px",
+    "font-size": "0.8em",
     display: "flex",
     "justify-content": "space-around",
-  },
+    color:"#fff",
+    "min-width": "150px",
+   },
+  logspan:{
+    "padding-top": "10px",
+    margin: "5px",
+    "font-size":'0.8rem',
+   }
 });

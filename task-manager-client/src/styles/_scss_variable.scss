@@ -1,0 +1,47 @@
+/*****colors**/
+$border: #d9d9dc;
+$done: green;
+$error: #f44336;
+$buttonBG: hsla(210, 79%, 46%, 0.68);
+$buttonFontColor: #fff;
+$BG: #1976d2;
+$AppBG: hsla(210, 79%, 46%, 0.1);
+$font: rgba(0, 11, 41, 0.87);
+
+.bold {
+  font-weight: bold;
+}
+.bigger {
+  font-size: larger;
+}
+.center {
+  text-align: center;
+}
+.done {
+  color: $done;
+}
+.notDone {
+  color: $error;
+}
+.displaynone {
+  display: none !important;
+}
+.strech {
+  width: 150%;
+}
+.mark {
+  border: 1px solid #1976d2;
+}
+img {
+  border: 1px solid $border;
+}
+
+
+h2 {
+  font-size: 18px;
+  font-weight: 500;
+  @media only screen and (max-width: 414px) {
+    font-size: 1.1rem;
+  }
+}
+

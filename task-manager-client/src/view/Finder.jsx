@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useStore } from "../state/Tasks.store";
 import styled from "styled-components/macro";
-import { createGlobalStyle } from "styled-components";
 
-const Finder = ({ }) => {
-  const { setSearch, search } = useStore();
+const Finder = () => {
+  const { setSearch } = useStore();
   const searchInput = useRef("");
   const onSearch = () => {
     setSearch(searchInput.current.value);
@@ -12,34 +11,31 @@ const Finder = ({ }) => {
   return (
     <Maindiv>
       <Searchwrap>
-        <input
+        <SearchInput
           type="text"
           placeholder="  search..."
           ref={searchInput}
           onChange={onSearch}
         />
       </Searchwrap>
-      <TaskLocalStyles />
     </Maindiv>
   );
 };
 
 export default Finder;
 
-const TaskLocalStyles = createGlobalStyle`
-input{
-    width: 90%;
-    height: 22px;
-    padding: 2px 5px;
-    margin: 5px -6px;
-}
-   `;
 const Maindiv = styled.div`
   width: 40%;
   display: flex;
 `;
-
 const Searchwrap = styled.div`
   display: flex;
   justify-content: space-around;
+`;
+const SearchInput = styled.input`
+  width: 80%;
+  height: 24px;
+  padding: 2px 5px;
+  margin: 5px -6px;
+  border-radius: 3px;
 `;

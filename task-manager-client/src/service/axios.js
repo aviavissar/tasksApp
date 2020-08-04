@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios1 from "axios";
+let axios = axios1.default;
 
 let token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZThmYjFkMThjNmM0MjM0Yzg4MGMyNyIsImlhdCI6MTU5MjUxNTQwOH0.QKGwL9AFIHZuHUZlpUvw8N4e91geQ3iAwwLlIV8LHok";
@@ -6,7 +7,7 @@ export const login = async (email, password) => {
   try {
     console.log(email + "," + password);
     const response = await axios.post(
-      "http://localhost:3000/users/login",
+      "/users/login",
       { email, password },
       {
         headers: { "Content-Type": "application/json" },
@@ -17,14 +18,14 @@ export const login = async (email, password) => {
       return response;
     }
   } catch (error) {
-    console.error(" claint error" + error);
+    console.error(" client error" + error);
   }
 };
 
 export const logout = async (userToken) => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/users/logout",
+      "/users/logout",
       {},
       {
         headers: {
@@ -34,7 +35,7 @@ export const logout = async (userToken) => {
     );
     return response.data;
   } catch (error) {
-    console.error(" claint error" + error);
+    console.error(" client error" + error);
   }
 };
 
@@ -42,7 +43,7 @@ export const createTask = async (description, completed, userToken) => {
   try {
     const response = await axios({
       method: "post",
-      url: "http://localhost:3000/tasks",
+      url: "/tasks",
       headers: {
         //'Access-Control-Allow-Origin': '*',
         "Content-Type": "application/json; charset=utf-8",
@@ -61,41 +62,39 @@ export const createTask = async (description, completed, userToken) => {
 };
 
 export const createUser = async (email, password, name, age) => {
+  // eslint-disable-next-line no-useless-catch
   try {
-
     const response = await axios({
       method: "post",
-      url: "http://localhost:3000/users",
+      url: "/users",
       headers: {},
       data: {
         name,
         age,
         email,
         password,
-      }
-    }).catch(e => {
-      console.log("error", e.response)
+      },
+    }).catch((e) => {
+      console.log("error", e.response);
       if (e.response.data.code === 11000) {
-        throw new Error('this email already exist');
+        throw new Error("this email already exist");
       }
-    })
+    });
 
-    return response
+    return response;
   } catch (error) {
-    throw error
+    throw error;
   }
 };
 
-export const getAllTasks = async (search,limit, sortBy) => {
+export const getAllTasks = async (search, limit, sortBy) => {
   try {
-    const response = await axios.get("http://localhost:3000/all-tasks", {
+    const response = await axios.get("/all-tasks", {
       params: {
         search,
         limit,
-        sortBy
-      }
-    }
-    );
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -106,11 +105,12 @@ export const getUserTasks = async (userToken) => {
   try {
     const response = await axios({
       method: "get",
-      url: "http://localhost:3000/mytasks",
+      url: "/mytasks",
       headers: {
         Authorization: userToken,
       },
     });
+
     return response.data;
   } catch (error) {
     console.error(error);
@@ -120,7 +120,7 @@ export const getProfile = async (userToken) => {
   try {
     const response = await axios({
       method: "get",
-      url: "http://localhost:3000/users/me",
+      url: "/users/me",
       headers: {
         Authorization: token || userToken,
       },
@@ -137,7 +137,7 @@ export const updateProfile = async (profile, userToken) => {
     console.log("response", profile);
     const response = await axios({
       method: "patch",
-      url: "http://localhost:3000/users/me",
+      url: "/users/me",
       data: {
         name,
         age,
@@ -150,27 +150,56 @@ export const updateProfile = async (profile, userToken) => {
     });
     return response.data;
   } catch (error) {
-    console.error(" claint error");
+    console.error(" client error");
   }
 };
 
-export const updateAvatar = async (imagefile, userToken) => {
+export const updateAvatar = async (imageFile, userToken) => {
   const formData = new FormData();
   try {
-    await formData.append("upload", imagefile.files[0]);
+    await formData.append("upload", imageFile.files[0]);
     console.log(userToken);
-    const resp = await axios.post(
-      "http://localhost:3000/users/me/avatar",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: userToken,
-        },
-      }
-    );
+    await axios.post("/users/me/avatar", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: userToken,
+      },
+    });
   } catch (error) {
     console.error(" exios claint error" + error);
   }
 };
 
+export const updateTask = async (editTask, userToken) => {
+  console.log(editTask);
+  const { _id, description, completed } = editTask;
+  try {
+    console.log("response", editTask);
+    const response = await axios({
+      method: "patch",
+      url: `/tasks/${_id}`,
+      data: {
+        description,
+        completed,
+      },
+      headers: {
+        Authorization: userToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(" claint error");
+  }
+};
+
+export const deleteTask = async (userToken, id) => {
+  try {
+    await axios.delete(`/tasks/${id}`, {
+      headers: {
+        Authorization: userToken,
+      },
+    });
+  } catch (error) {
+    console.error(" exios claint error" + error);
+  }
+};

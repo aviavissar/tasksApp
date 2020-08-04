@@ -18,6 +18,7 @@ const useStore = () => {
   return context;
 };
 
+// eslint-disable-next-line react/prop-types
 const TaskAppProvider = ({ children }) => {
   const [allTasks, setAllTasks] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
@@ -25,43 +26,37 @@ const TaskAppProvider = ({ children }) => {
   const [userTasks, setUserTasks] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
   const [search, setSearch] = useState('');
+  const [limit, setLimit] = useState('all');
+  const [refreshTask, setRefreshTask] = useState(false);
+  const [editTask, setEditTask] = useState({})
+  
+
+  useEffect(() => {
+    console.log(userToken)
+    async function fetchData() {
+      if (userToken) {
+        setUserProfile(await getProfile(userToken));
+        setUserTasks(await getUserTasks(userToken,search,limit));
+      }
+           //  setUserProfile(await getProfile(userToken));
+      setAllTasks(await getAllTasks(search,limit));
+    }
+    fetchData();
+  }, [search,userToken,limit]);
 
   useEffect(() => {
     async function fetchData() {
       if (userToken) {
-        setUserProfile(await getProfile(userToken));
-        setUserTasks(await getUserTasks(userToken));
+      setUserTasks(await getUserTasks(userToken,search,limit));
       }
-      //  setUserProfile(await getProfile(userToken));
-      setAllTasks(await getAllTasks(search));
+      setAllTasks(await getAllTasks(search,limit));
     }
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      //    const newtask = await getAllTasks();
-      setAllTasks(await getAllTasks());
-    }
-    fetchData();
-  }, [userTasks, userProfile]);
-
-
-  useEffect(() => {
-    console.log(search)
-    async function fetchData() {
-      setAllTasks(await getAllTasks(search));
-    }
-    fetchData();
-  }, [search]);
-
-
-
-
-
+  }, [userProfile,userToken,refreshTask,search,limit]);
 
   //my login logout func
   const doLogIn = async (email, password) => {
+  
     const res = await login(email, password);
     const { data, status } = res;
     setUserToken(data.token);
@@ -82,7 +77,7 @@ const TaskAppProvider = ({ children }) => {
     userProfile,
     userTasks,
     userToken,
-    isConnected, search
+    isConnected, search,limit,refreshTask,editTask
   };
 
   // actions = callbacks to invoke
@@ -94,10 +89,14 @@ const TaskAppProvider = ({ children }) => {
     doLogout,
     doLogIn,
     setIsConnected,
-    setSearch
+    setSearch,
+    setLimit,
+    setEditTask,setRefreshTask
   };
 
   return <Provider value={{ ...state, ...actions }}>{children}</Provider>;
 };
 
 export { TaskAppProvider, useStore };
+ 
+    

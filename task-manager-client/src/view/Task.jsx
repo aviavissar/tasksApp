@@ -1,22 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useStore } from "../state/Tasks.store";
 import styled from "styled-components/macro";
-import { createGlobalStyle } from "styled-components";
 import Img from "./Img";
+import Alert from "./AlertDialog";
+import { deleteTask } from "../service/axios";
 
 const Task = ({ task = {}, userlist }) => {
-  const sort = true;
-  let { description, completed, createdAt, updatedAt, owner, ownerName } = task;
-  const { setUserProfile, userProfile } = useStore();
-  const dodd = () => {
-    console.log("sssssssss");
+  let {
+    _id,
+    description,
+    completed,
+    createdAt,
+    updatedAt,
+    owner,
+    ownerName,
+  } = task;
+  const {
+    setEditTask,
+    userProfile,
+    userToken,
+    refreshTask,
+    setRefreshTask,
+  } = useStore();
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [bgcolor] = useState("");
+  const DeleteWhenDialogAgree = () => {
+    deleteTask(userToken, _id);
+    setRefreshTask(!refreshTask);
   };
- 
+  const doEditTask = () => {
+    setEditTask(task);
+  };
+
   const isCompleted = true;
   return (
     <Maindiv>
       {
-        <TaskRow>
+        <TaskRow className={bgcolor}>
           <div
             className={userlist ? "flex-row first myTask" : "flex-row first"}
           >
@@ -46,6 +67,28 @@ const Task = ({ task = {}, userlist }) => {
               {updatedAt}
             </div>
             <div
+              className={userlist ? "flex-row " : "flex-row displaynone"}
+              role="cell"
+            >
+              <button onClick={doEditTask}>
+                <i className="fa fa-edit"></i>
+              </button>
+            </div>
+            <div
+              className={userlist ? "flex-row " : "flex-row displaynone"}
+              role="cell"
+            >
+              <button onClick={() => setOpenDialog(true)}>
+                <i className="fa fa-trash"></i>
+              </button>
+              <Alert
+                openDialog={openDialog}
+                titleDialog="pay attention!"
+                textDialog="The task will be deleted! are you sure?"
+                action={DeleteWhenDialogAgree}
+              ></Alert>
+            </div>
+            <div
               className={userlist ? "flex-row displaynone" : "flex-row"}
               role="cell"
             >
@@ -55,76 +98,30 @@ const Task = ({ task = {}, userlist }) => {
               className={userlist ? "flex-row displaynone" : "flex-row"}
               role="cell"
             >
-    <Img owner={owner} userProfile={userProfile} />
-      
+              <Img owner={owner} userProfile={userProfile} />
             </div>
           </div>
         </TaskRow>
       }
-
-      <TaskLocalStyles />
     </Maindiv>
   );
 };
 
 export default Task;
 
-const TaskLocalStyles = createGlobalStyle`
-
-.containerT {
-     display:flex;
-        justify-content:space-between;
-   width:70%;
-  
-}
- div.myTask{width: 32% !important;}
-.table-container{
-  background: #8c959e17;
-  border: 1px solid #d9d9dc;
- width:102%;
-}
-.strech{
-  width:150%;
-  }
-  
-.displaynone{
-  display:none !important;
-}
-.flex-table img{
-  width: 5vw;
-}
-.row{
-  padding: 4vh 1vw 1vh 2vw;
-}
-
-.flex-table {
-  display: flex;
-  text-align:left;
-  flex-flow: row wrap;
-    transition: 0.5s;
-
-    .flex-row {
-      width: 20%;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      
-      &.first {
-        width: 30%;
-           display: flex;
-      justify-content: center;
-      flex-direction: column;
-      }
-    }
-  }
-   `;
 const Maindiv = styled.div`
-  margin-top: 15px;
   width: 100%;
 `;
 
 const TaskRow = styled.div`
   display: flex;
-  width: 98%;
-  padding: 2%;
+  padding: 1vh 2vw;
+  border: 1px solid #e5e5e6;
+  background-color: #fffdfd;
+  @media only screen and (max-width: 414px) {
+    padding: 2vh 2vw;
+    button {
+      min-width: 10px;
+    }
+  }
 `;

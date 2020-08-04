@@ -1,0 +1,78 @@
+.MuiAccordionSummary-root.Mui-expanded {
+  min-height: 20px !important;
+  margin: 12px 0 2px 0;
+}
+
+.MuiFormHelperText-root.Mui-error {
+  color: $error !important;
+}
+
+.MuiFormHelperText-root {
+  color: $error !important;
+}
+.App-header .MuiButton-outlinedPrimary {
+  color: #fdfdfd;
+  border: 1px solid rgb(255, 255, 255);
+}
+.MuiDialogTitle-root {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 7px 24px;
+}
+.MuiCollapse-wrapperInner .MuiAccordionDetails-root {
+  display: flex;
+  padding: 8px 0;
+}
+.MuiAccordion-root.Mui-disabled {
+  background-color: white !important;
+}
+.MuiAccordion-root:before {
+  display: none;
+}
+.MuiAccordion-root.Mui-expanded:last-child {
+  margin-bottom: 0;
+  width: 100%;
+}
+.MuiAccordionSummary-content.Mui-expanded {
+  margin: 10px 0 !important;
+}
+
+svg:not(:root) {
+  overflow: visible;
+  height: 20px;
+}
+
+@media only screen and (max-width: 414px) {
+  .MuiCollapse-wrapperInner .MuiAccordionDetails-root {
+    padding: 0px;
+  }
+  .MuiPaper-root .MuiDialogTitle-root {
+    margin: 6px 0 -15px 0;
+    padding: 5px 24px;
+  }
+  .makeStyles-root-5 {
+    display: flex;
+    flex-direction: column;
+  }
+  .MuiDialogContent-root {
+    .makeStyles-details-7 {
+      width: initial;
+      margin: 0px;
+      .makeStyles-MuiFormControl-10 {
+        margin: 5px;
+      }
+    }
+    .makeStyles-imgDiv-6 {
+      width: initial;
+      margin: 0px;
+      .makeStyles-img-9 {
+        width: 80px;
+        height: 100px;
+        justify-content: space-around;
+      }
+      .makeStyles-MuiFormControl-10 {
+        margin: 5px;
+      }
+    }
+  }
+}

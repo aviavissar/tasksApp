@@ -1,0 +1,82 @@
+
+
+
+@media only screen and (max-width: 414px) {
+    .App {
+      text-align: left;
+      padding: 2px;
+      font-size: 0.7rem;
+    }
+    .App-header {
+      padding: 10px 5px;
+      width: 99%;
+      min-height: 7vh;
+      z-index: 50;
+      margin: -2px -2px 0px -2px;
+    }
+    .taskRow .flex-row,
+    .taskRow:first-of-type .flex-row.first,
+    .taskRow:first-of-type .flex-row {
+      width: 22%;
+      &.ownername {
+        width: 20%;
+        button {
+          min-width: 60px;
+        }
+      }
+      button,
+      span {
+        font-size: 0.7rem;
+      }
+      span {
+        margin: 1px 0px 3px 2px;
+        letter-spacing: 0px;
+      }
+      button {
+        min-width: 65px;
+        margin: 1px;
+        letter-spacing: 0px;
+      }
+    }
+    .taskRow .flex-row.first {
+      width: 22%;
+    }
+    .taskRow .containerT .flex-row {
+      width: 24%;
+      margin: 0px 5px;
+    }
+    .table-container .taskRow:first-of-type .flex-row.first {
+      width: 17%;
+      padding-left: 0px;
+    }
+    .container {
+      width: 83%;
+    }
+    .containerT {
+      width: 84%;
+      button {
+        min-width: 10px;
+      }
+    }
+    .table-container {
+      margin: 5px;
+      width: 100%;
+    }
+    button {
+      margin: 5px;
+      font-size: 12px;
+      min-width: 80px;
+    }
+    .taskRow .containerT button {
+      min-width: 10px;
+    }
+    .App__Aside-sc-1vp6mrx-1
+      .table-container
+      .taskRow:first-of-type
+      .flex-row.first {
+      width: 26%;
+      padding-left: 0px;
+    }
+    
+  }
+  

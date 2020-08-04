@@ -8,7 +8,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { updateAvatar, createUser } from "../service/axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { useStore } from "../state/Tasks.store";
-import { green, red } from '@material-ui/core/colors';
+import {  red } from "@material-ui/core/colors";
 import schema from "../service/yupSchema";
 import { Formik, Form } from "formik";
 
@@ -37,34 +37,32 @@ const SignIn = () => {
   const doUpdateAvatar = async (handleChange) => {
     var reader = new FileReader();
     reader.readAsDataURL(sampleFileRef.current.files[0]);
-    console.log(reader);
     reader.onload = () => {
       setAvtSrc(reader.result);
     };
   };
 
   const doSignUp = async (email, password, name, age, avatar) => {
-    console.log("doSignUp", age);
-
-    const { data, status } = await createUser(email, password, name, age, avatar);
-
+    const { data } = await createUser(email, password, name, age);
     if (avatar.files.length !== 0) {
-      console.log(sampleFileRef.current)
       await updateAvatar(avatar, data.token);
     }
     doLogIn(email, password);
     handleClose();
-
   };
 
   return (
     <div>
       {!isConnected ? (
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        <Button
+          variant="outlined"
+          className={classes.MuiButton}
+          color="primary"
+          onClick={handleClickOpen}
+        >
           sign In
         </Button>
       ) : null}
-
       <Dialog
         open={open}
         onClose={handleClose}
@@ -89,9 +87,9 @@ const SignIn = () => {
               nameInput.current.value,
               ageInput.current.value,
               sampleFileRef.current
-            ).catch(e => {
-              console.log(e)
-              actions.setFieldError('emailerr', e.message)
+            ).catch((e) => {
+              console.log(e);
+              actions.setFieldError("emailerr", e.message);
             });
           }}
         >
@@ -99,7 +97,7 @@ const SignIn = () => {
             <Form className={classes.form}>
               <DialogContent className={classes.root}>
                 <div className={classes.imgDiv}>
-                  <img
+                  <img alt='avatar'
                     className={classes.img}
                     src={`${avtSrc.toString("base64")}`}
                   />
@@ -147,7 +145,7 @@ const SignIn = () => {
                     inputRef={ageInput}
                     className={classes.MuiFormControl}
                     helperText={errors.age && touched.age ? errors.age : null}
-                    defaultValue='5'
+                    defaultValue="5"
                   />
                   <TextField
                     autoFocus
@@ -162,7 +160,10 @@ const SignIn = () => {
                     inputRef={mailInput}
                     className={classes.MuiFormControl}
                     helperText={
-                      (errors.email && touched.email ? errors.email : null) || errors.emailerr ? errors.emailerr : null
+                      (errors.email && touched.email ? errors.email : null) ||
+                      errors.emailerr
+                        ? errors.emailerr
+                        : null
                     }
                   />
 
@@ -201,7 +202,7 @@ const SignIn = () => {
                     }
                     helperText={
                       errors.passwordConfirmation &&
-                        touched.passwordConfirmation
+                      touched.passwordConfirmation
                         ? errors.passwordConfirmation
                         : null
                     }
@@ -227,13 +228,17 @@ const SignIn = () => {
 export default SignIn;
 
 const useStyles = makeStyles({
-
   "MuiDialog-paperScrollPaper": {
     " max-height": "500px",
   },
+  MuiButton: {
+    "font-size": "14px",
+    width: "60px",
+    padding: "1px",
+    margin: "5px",
+  },
   root: {
     display: "flex",
-
   },
   imgDiv: {
     display: "flex",
@@ -259,7 +264,7 @@ const useStyles = makeStyles({
   },
   MuiFormControl: {
     margin: "16px",
-    '&$helperText': {
+    "&$helperText": {
       color: red,
     },
   },
