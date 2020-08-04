@@ -52,12 +52,12 @@ userSchema.virtual('tasks', {
     foreignField: 'owner'
 
 })
-userSchema.virtual('tasks', {
-    ref: 'Task',
-    localField: 'name',
-    foreignField: 'ownerName'
+// userSchema.virtual('tasks', {
+//     ref: 'Task',
+//     localField: 'name',
+//     foreignField: 'ownerName'
 
-})
+// })
 
 userSchema.methods.toJSON = function () {
     const user = this;

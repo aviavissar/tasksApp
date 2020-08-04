@@ -13,8 +13,7 @@ router.post("/tasks", auth, async (req, res) => {
   });
   try {
     await task.save();
-    console.log("response", req.body);
-    res.status(201).send(task);
+     res.status(201).send(task);
   } catch (e) {
     res.status(400).send(e);
   }
@@ -29,8 +28,6 @@ router.get("/mytasks", auth, async (req, res) => {
   if (req.query.sortBy) {
     const parts = req.query.sortBy.split(":");
     sort[parts[0]] = parts[1] === "desc" ? -1 : 1;
-
-    console.log(sort);
   }
   try {
     //const tasks = await Task.find({ owner: req.user._id });
@@ -47,15 +44,16 @@ router.get("/mytasks", auth, async (req, res) => {
         },
       })
       .execPopulate();
-
-    res.send(req.user.tasks);
+console.log('mytask',req.user.tasks)
+ //   res.send(req.user.tasks); 
+    res.send( processedTasks(req.user.tasks));
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
 router.get("/all-tasks", async (req, res) => {
-    console.log('search',req.query.search)
+ //   console.log('search',req.query.search)
   let match = {"$regex":""};
   const sort = {};
   if (req.query.completed) {
@@ -64,9 +62,9 @@ router.get("/all-tasks", async (req, res) => {
   if (req.query.sortBy) {
     const parts = req.query.sortBy.split(":");
    
-    sort[parts[0]] = parts[1] === "desc" ? -1 : 1;
+    //sort[parts[0]] = parts[1] === "desc" ? -1 : 1;
    
-    console.log(sort);
+   // console.log(sort);
   }
   if (req.query.search) {
     match={ "$regex":req.query.search}
@@ -74,24 +72,26 @@ router.get("/all-tasks", async (req, res) => {
 
  
   try {
-  
-    const tasks = await Task.find( {description:match} ).limit(req.query.limit).sort({ createdAt: 1 }).skip(0);
+  let limit=req.query.limit==='all'?0: parseInt(req.query.limit)
+    const tasks = await Task.find( {description:match} ).limit(limit).sort({ createdAt: 1 }).skip(0);
     //   const clientEncryption = encryptedClient.getClientEncryption();
     //     clientEncryption.decrypt(avatar)
-    const processedTasks = tasks.map(
-      ({ description, completed, createdAt, updatedAt, ownerName, owner }) => {
-        return {
-          description,
-          completed: completed.toString(),
-          createdAt: moment.parseZone(createdAt).format("L"),
-          updatedAt: moment.parseZone(updatedAt).format("L"),
-          ownerName,
-          owner,
-        };
-      }
-    );
+    // const processedTasks = tasks.map(
+    //   ({ description, completed, createdAt, updatedAt, ownerName, owner }) => {
+    //     return {
+    //       description,
+    //       completed: completed.toString(),
+    //       createdAt: moment.parseZone(createdAt).format("L"),
+    //       updatedAt: moment.parseZone(updatedAt).format("L"),
+    //       ownerName,
+    //       owner,
+    //     };
+    //   }
+    // );
 
-    res.send(processedTasks);
+   
+
+    res.send( processedTasks(tasks));
   } catch (error) {
     res.status(500).send(error);
   }
@@ -148,5 +148,24 @@ router.delete("/tasks/:id", auth, async (req, res) => {
     res.status(400).send();
   }
 });
+
+
+const processedTasks =(tasks)=>{
+
+  return tasks.map(
+    ({ description,_id, completed, createdAt, updatedAt, ownerName, owner }) => {
+      return {
+        _id,
+        description,
+        completed: completed.toString(),
+        createdAt: moment.parseZone(createdAt).format("L"),
+        updatedAt: moment.parseZone(updatedAt).format("L"),
+        ownerName,
+        owner,
+      };
+    }
+  );
+
+} 
 
 module.exports = router;
